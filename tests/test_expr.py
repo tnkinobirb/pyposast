@@ -1092,3 +1092,11 @@ class TestExpr(NodeTestCase):
         self.assertPosition(nodes[0], (2, 0), (2, 8), (2, 5))
         self.assertOperation(nodes[0].op_pos[0], (2, 3), (2, 5), (2, 5), ':=')
         self.assertSimpleInnerPosition(nodes[0], (2, 1), (2, 7))
+
+    @ge_python38
+    def test_pos_only_without_default(self):
+        code = (
+            "def f(a, /, b=2):\n"
+            "    return a + b"
+        )
+        get_nodes(code, ast.arguments)
